@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash_container"
+    android:background="#e44f4f"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/rocket"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:text="SpaceDrift"
+        android:textStyle="bold"
+        style="@style/QTheme"
+        tools:ignore="HardcodedText,SpUsage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/percent_text"
+        android:text="Loading...."
+        style="@style/Text"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="developed by: easystudios"
+        style="@style/Text"/>
+
+    <ProgressBar android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/textView27"
+        android:layout_alignBottom="@+id/textView27"
+        android:layout_toStartOf="@+id/textView27"
+        tools:ignore="ObsoleteLayoutParam,RtlHardcoded" />
+</LinearLayout>
+
+
+

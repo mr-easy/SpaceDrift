@@ -8,4 +8,33 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="QTheme" parent="android:Theme.Light">
+        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/QText</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="QText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="Phimpme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

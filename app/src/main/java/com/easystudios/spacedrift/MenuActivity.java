@@ -1,12 +1,14 @@
 package com.easystudios.spacedrift;
 
-import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
@@ -17,12 +19,6 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_menu);
         ad = new AlertDialog.Builder(MenuActivity.this);
         ad.setMessage("Leaving so soon?");
@@ -35,27 +31,21 @@ public class MenuActivity extends AppCompatActivity {
         ad.setCancelable(true);
     }
 
-    public void play(View v){
-        Intent intent = new Intent(MenuActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
 
-    public void help(View v){
-        Toast.makeText(MenuActivity.this, "help", Toast.LENGTH_SHORT).show();
-    }
-
-    public void credits(View v){
-        Toast.makeText(MenuActivity.this, "credits", Toast.LENGTH_SHORT).show();
-    }
-
-    public void quit(View v){
-        quit();
-    }
 
     @Override
+
     public void onBackPressed() {
-        super.onBackPressed();
-        quit();
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MenuActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     public void quit(){
@@ -63,16 +53,68 @@ public class MenuActivity extends AppCompatActivity {
         ad.show();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+    class MyBounceInterpolator implements android.view.animation.Interpolator {
+        double mAmplitude = 1;
+        double mFrequency = 10;
+
+        MyBounceInterpolator(double amplitude, double frequency) {
+            mAmplitude = amplitude;
+            mFrequency = frequency;
+        }
+
+        public float getInterpolation(float time) {
+            return (float) (-1 * Math.pow(Math.E, -time/ mAmplitude) *
+                    Math.cos(mFrequency * time) + 1);
         }
     }
+
+    public void play(View view) {
+        ImageButton button = (ImageButton)findViewById(R.id.button);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 100);
+        myAnim.setInterpolator(interpolator);
+        Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+        startActivity(intent);
+
+        button.startAnimation(myAnim);
+    }
+
+    public void help(View view) {
+        ImageButton button = (ImageButton)findViewById(R.id.button2);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 100);
+        myAnim.setInterpolator(interpolator);
+      //  Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+      //  startActivity(intent);
+        Toast.makeText(MenuActivity.this, "help", Toast.LENGTH_SHORT).show();
+        button.startAnimation(myAnim);
+    }
+    public void credits(View view) {
+        ImageButton button = (ImageButton)findViewById(R.id.button3);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 100);
+        myAnim.setInterpolator(interpolator);
+        //  Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+        //  startActivity(intent);
+        Toast.makeText(MenuActivity.this, "Developer", Toast.LENGTH_SHORT).show();
+        button.startAnimation(myAnim);
+    }
+    public void quit(View view) {
+        ImageButton button = (ImageButton)findViewById(R.id.button4);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 100);
+        myAnim.setInterpolator(interpolator);
+         onBackPressed();
+        button.startAnimation(myAnim);
+    }
+
 }
