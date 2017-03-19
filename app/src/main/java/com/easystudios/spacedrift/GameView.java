@@ -56,6 +56,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     //input buttons and joysticks
     int leftBtnX, leftBtnY, rightBtnX, rightBtnY, btnRadius;
+    float heartX, heartY;
     float healthBarLeft, healthBarTop, healthBarRight, healthBarBottom, healthBarWidth;
     boolean left, right;
 
@@ -101,9 +102,11 @@ public class GameView extends SurfaceView implements Runnable {
         rightBtnX = (int) (screenX - btnRadius - 10);
         healthBarLeft = screenX/4;
         healthBarRight = 3 * screenX / 4;
-        healthBarTop = 20;
-        healthBarBottom = 40;
+        healthBarTop = 40;
+        healthBarBottom = 70;
         healthBarWidth = healthBarRight - healthBarLeft;
+        heartX = screenX - 100;
+        heartY = 100;
 
         playerShip = new Ship(context, screenX, screenY, worldSizeX, worldSizeY);
         asteroids = new Asteroid[maxAsteroids];
@@ -351,9 +354,12 @@ public class GameView extends SurfaceView implements Runnable {
 
             //Health Bar
             canvas.drawRect(healthBarLeft, healthBarTop, healthBarRight, healthBarBottom, paint);
-            canvas.drawText("FPS = " + avgFps, screenX - 300, 70, paint);
             paint.setStyle(Paint.Style.FILL);
             canvas.drawRect(healthBarLeft, healthBarTop, healthBarLeft + (healthBarWidth * health / 100), healthBarBottom, paint);
+            //Health symbol - heart
+            canvas.drawText("♥", heartX, heartY, paint);
+            //FPS
+            //canvas.drawText("FPS = " + avgFps, screenX - 300, 70, paint);
 
             holder.unlockCanvasAndPost(canvas);
         }
@@ -362,7 +368,7 @@ public class GameView extends SurfaceView implements Runnable {
     public void gameOver(){
         paused = true;
 
-        try {
+        /*try {
             gameThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -376,7 +382,20 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(endScreenshot, 0, 0, paint);
             canvas.drawCircle(endPoint.x, endPoint.y, rad, paint);
             rad += 1/10;
+        }*/
+        //TODO: create some nice effects on game over, show the score to the player, maybe add a game over screen
+
+        /*
+        if(holder.getSurface().isValid()) {
+            canvas = holder.lockCanvas();
+            canvas.drawText("GAME OVER!", screenX/2, screenY/2, paint);
         }
+
+        float t1 = System.currentTimeMillis();
+        float t2 = t1;
+        while(t2 - t1 < 100) {
+            t2 = System.currentTimeMillis();
+        }*/
 
         Intent intent = new Intent(context, MenuActivity.class);
         context.startActivity(intent);
